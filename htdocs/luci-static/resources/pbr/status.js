@@ -11,7 +11,7 @@ var pkg = {
 		return "pbr";
 	},
 	get LuciCompat() {
-		return 14;
+		return 15;
 	},
 	get ReadmeCompat() {
 		return "1.1.9";
@@ -284,6 +284,10 @@ var status = baseclass.extend({
 							"</a>"
 						)
 					),
+					warningSummary: _("Warnings encountered, please check %s"),
+					warningIncompatibleDHCPOption6: _(
+						"Incompatible DHCP Option 6 for interface %s"
+					),
 				};
 				var warningsTitle = E(
 					"label",
@@ -298,6 +302,10 @@ var status = baseclass.extend({
 						text += _("Unknown warning") + "<br />";
 					}
 				});
+				text += _("Warnings encountered, please check the %sREADME%s").format(
+					'<a href="' + pkg.URL + '#WarningMessagesDetails" target="_blank">',
+					"</a>!<br />"
+				);
 				var warningsText = E("div", { class: "cbi-value-description" }, text);
 				var warningsField = E(
 					"div",
@@ -332,11 +340,11 @@ var status = baseclass.extend({
 					errorNoWanGateway: _(
 						"The %s service failed to discover WAN gateway"
 					).format(pkg.Name),
-					errorNoWanInterface: _(
-						"The %s interface not found, you need to set the 'pbr.config.procd_wan_interface' option"
+					errorNoUplinkInterface: _(
+						"The %s interface not found, you need to set the 'pbr.config.uplink_interface' option"
 					),
-					errorNoWanInterfaceHint: _(
-						"Refer to https://docs.openwrt.melmac.ca/pbr/#procd_wan_interface"
+					errorNoUplinkInterfaceHint: _(
+						"Refer to https://docs.openwrt.melmac.ca/pbr/#uplink_interface"
 					),
 					errorIpsetNameTooLong: _(
 						"The ipset name '%s' is longer than allowed 31 characters"
@@ -416,6 +424,7 @@ var status = baseclass.extend({
 					errorInterfaceRoutingUnknownDevType: _(
 						"Unknown IPv6 Link type for device '%s'"
 					),
+					errorSummary: _("Errors encountered, please check %s"),
 				};
 				var errorsTitle = E(
 					"label",
@@ -431,7 +440,7 @@ var status = baseclass.extend({
 					}
 				});
 				text += _("Errors encountered, please check the %sREADME%s").format(
-					'<a href="' + pkg.URL + '" target="_blank">',
+					'<a href="' + pkg.URL + '#ErrorMessagesDetails" target="_blank">',
 					"</a>!<br />"
 				);
 				var errorsText = E("div", { class: "cbi-value-description" }, text);
