@@ -14,7 +14,7 @@ var pkg = {
 		return 17;
 	},
 	get ReadmeCompat() {
-		return "1.2.0";
+		return "1.2.1";
 	},
 	get URL() {
 		return (
