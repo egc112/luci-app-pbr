@@ -11,7 +11,7 @@ var pkg = {
 		return "pbr";
 	},
 	get LuciCompat() {
-		return 17;
+		return 18;
 	},
 	get ReadmeCompat() {
 		return "1.2.1";
@@ -433,6 +433,15 @@ var status = baseclass.extend({
 						"Invalid OpenVPN config for '%s' interface"
 					),
 					errorNftFileInstall: _("Failed to install fw4 nft file '%s'"),
+					errorNftNetifdFileInstall: _(
+						"Failed to install fw4 netifd nft file '%s'"
+					),
+					errorNftNetifdFileRemove: _(
+						"Failed to remove fw4 netifd nft file '%s'"
+					),
+					errorMissingNetifdOption: _(
+						"Netifd extensions setup requires setting up option '%s'"
+					),
 					errorNoDownloadWithSecureReload: _(
 						"Policy '%s' refers to URL which can't be downloaded in 'secure_reload' mode"
 					),
