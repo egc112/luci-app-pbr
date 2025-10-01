@@ -11,7 +11,7 @@ var pkg = {
 		return "pbr";
 	},
 	get LuciCompat() {
-		return 18;
+		return 19;
 	},
 	get ReadmeCompat() {
 		return "1.2.1";
@@ -317,6 +317,9 @@ var status = baseclass.extend({
 					warningIncompatibleDHCPOption6: _(
 						"Incompatible DHCP Option 6 for interface %s"
 					),
+					warningNetifdMissingInterfaceLocal: _(
+						"Netifd setup: option netifd_interface_local is missing, assuming '%s'"
+					),
 				};
 				var warningsTitle = E(
 					"label",
@@ -433,15 +436,6 @@ var status = baseclass.extend({
 						"Invalid OpenVPN config for '%s' interface"
 					),
 					errorNftFileInstall: _("Failed to install fw4 nft file '%s'"),
-					errorNftNetifdFileInstall: _(
-						"Failed to install fw4 netifd nft file '%s'"
-					),
-					errorNftNetifdFileRemove: _(
-						"Failed to remove fw4 netifd nft file '%s'"
-					),
-					errorMissingNetifdOption: _(
-						"Netifd extensions setup requires setting up option '%s'"
-					),
 					errorNoDownloadWithSecureReload: _(
 						"Policy '%s' refers to URL which can't be downloaded in 'secure_reload' mode"
 					),
@@ -466,6 +460,21 @@ var status = baseclass.extend({
 						"Failed to create temporary file with mktemp mask: '%s'"
 					),
 					errorSummary: _("Errors encountered, please check %s"),
+					errorNetifdNftFileInstall: _(
+						"Netifd setup: failed to install fw4 netifd nft file '%s'"
+					),
+					errorNetifdNftFileRemove: _(
+						"Netifd setup: failed to remove fw4 netifd nft file '%s'"
+					),
+					errorNetifdMissingOption: _(
+						"Netifd setup: required option '%s' is missing"
+					),
+					errorNetifdInvalidGateway4: _(
+						"Netifd setup: invalid value of netifd_interface_default option '%s'"
+					),
+					errorNetifdInvalidGateway6: _(
+						"Netifd setup: invalid value of netifd_interface_default6 option '%s'"
+					),
 				};
 				var errorsTitle = E(
 					"label",
