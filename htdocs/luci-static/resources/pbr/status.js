@@ -69,12 +69,6 @@ var pkg = {
 	},
 };
 
-var getGateways = rpc.declare({
-	object: "luci." + pkg.Name,
-	method: "getGateways",
-	params: ["name"],
-});
-
 var getInitList = rpc.declare({
 	object: "luci." + pkg.Name,
 	method: "getInitList",
@@ -84,12 +78,6 @@ var getInitList = rpc.declare({
 var getInitStatus = rpc.declare({
 	object: "luci." + pkg.Name,
 	method: "getInitStatus",
-	params: ["name"],
-});
-
-var getInterfaces = rpc.declare({
-	object: "luci." + pkg.Name,
-	method: "getInterfaces",
 	params: ["name"],
 });
 
@@ -143,8 +131,9 @@ var status = baseclass.extend({
 	render: function () {
 		return Promise.all([
 			L.resolveDefault(getInitStatus(pkg.Name), {}),
+			L.resolveDefault(getPlatformSupport(pkg.Name), {}),
 			L.resolveDefault(getUbusInfo(pkg.Name), {}),
-		]).then(function ([initStatus, ubusInfo]) {
+		]).then(function ([initStatus, platformSupport, ubusInfo]) {
 			var reply = {
 				status: initStatus?.[pkg.Name] || {
 					enabled: null,
@@ -153,9 +142,18 @@ var status = baseclass.extend({
 					running_nft: null,
 					running_nft_file: null,
 					version: null,
-					gateways: null,
 					packageCompat: 0,
 					rpcdCompat: 0,
+				},
+				platform: platformSupport?.[pkg.Name] || {
+					ipset_installed: false,
+					nft_installed: false,
+					adguardhome_installed: false,
+					dnsmasq_installed: false,
+					unbound_installed: false,
+					adguardhome_ipset_support: false,
+					dnsmasq_ipset_support: false,
+					dnsmasq_nftset_support: false,
 				},
 				ubus: ubusInfo?.[pkg.Name]?.instances?.main?.data || {
 					packageCompat: 0,
@@ -688,7 +686,6 @@ return L.Class.extend({
 	status: status,
 	pkg: pkg,
 	getInitStatus: getInitStatus,
-	getInterfaces: getInterfaces,
 	getPlatformSupport: getPlatformSupport,
 	getUbusInfo: getUbusInfo,
 });

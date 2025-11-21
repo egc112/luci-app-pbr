@@ -113,7 +113,6 @@ get_init_status() {
 		json_add_boolean 'running_nft_file' '0'
 	fi
 	json_add_string 'version' "$PKG_VERSION"
-	json_add_string 'gateways' "$gateways"
 	json_add_int		'packageCompat'	"${packageCompat:-0}"
 	json_add_int		'rpcdCompat'		"${rpcdCompat:-0}"
 	json_close_object
