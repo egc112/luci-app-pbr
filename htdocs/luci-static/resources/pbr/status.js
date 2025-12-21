@@ -11,7 +11,7 @@ var pkg = {
 		return "pbr";
 	},
 	get LuciCompat() {
-		return 19;
+		return 20;
 	},
 	get ReadmeCompat() {
 		return "1.2.1";
@@ -133,6 +133,44 @@ var RPC = {
 	},
 };
 
+// Poll service status until completion (for long-running operations like download)
+var pollServiceStatus = function (callback) {
+	var maxAttempts = 300; // Max 5 minutes of polling
+	var attempt = 0;
+
+	var checkStatus = function () {
+		attempt++;
+
+		// Use the RPC function directly from the module scope
+		L.resolveDefault(getInitStatus(pkg.Name), {}).then(function (statusData) {
+			var currentStatus = statusData && statusData[pkg.Name] && statusData[pkg.Name].running;
+
+			// Check if completed or failed
+			if (currentStatus === true) {
+				callback(true, currentStatus);
+			}
+			// Check if timed out
+			else if (attempt >= maxAttempts) {
+				callback(false, 'timeout');
+			}
+			// Continue polling
+			else {
+				setTimeout(checkStatus, 1000); // Check again in 1 second
+			}
+		}).catch(function (err) {
+			// Retry on error unless timed out
+			if (attempt < maxAttempts) {
+				setTimeout(checkStatus, 1000);
+			} else {
+				callback(false, 'error');
+			}
+		});
+	};
+
+	// Start polling after 2 seconds delay (give backend time to start the task)
+	setTimeout(checkStatus, 3000);
+};
+
 var status = baseclass.extend({
 	render: function () {
 		return Promise.all([
@@ -172,8 +210,8 @@ var status = baseclass.extend({
 						pkg.LuciCompat,
 						reply.status.rpcdCompat,
 						'<a href="' +
-							pkg.URL +
-							'#Warning:InternalVersionMismatch" target="_blank">',
+						pkg.URL +
+						'#Warning:InternalVersionMismatch" target="_blank">',
 						"</a>",
 					],
 				});
@@ -229,8 +267,8 @@ var status = baseclass.extend({
 					).format(
 						"<strong>✓</strong>",
 						'<a href="' +
-							pkg.URL +
-							'#AWordAboutDefaultRouting" target="_blank">',
+						pkg.URL +
+						'#AWordAboutDefaultRouting" target="_blank">',
 						"</a>"
 					) +
 					"<br />" +
@@ -300,9 +338,9 @@ var status = baseclass.extend({
 							"Please set 'dhcp.%%s.force=1' to speed up service start-up %s(more info)%s"
 						).format(
 							"<a href='" +
-								pkg.URL +
-								"#Warning:Pleasesetdhcp.lan.force1" +
-								"' target='_blank'>",
+							pkg.URL +
+							"#Warning:Pleasesetdhcp.lan.force1" +
+							"' target='_blank'>",
 							"</a>"
 						)
 					),
@@ -673,8 +711,12 @@ var status = baseclass.extend({
 });
 
 RPC.on("setInitAction", function (reply) {
-	ui.hideModal();
-	location.reload();
+	// Don't immediately hide modal and reload
+	// Instead, poll status until the operation actually completes
+	pollServiceStatus(function () {
+		ui.hideModal();
+		location.reload();
+	});
 });
 
 return L.Class.extend({
