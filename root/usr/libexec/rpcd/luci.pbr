@@ -8,11 +8,9 @@
 # ubus -S call luci.pbr getInitList '{"name": "pbr" }'
 # ubus -S call luci.pbr getInitStatus '{"name": "pbr" }'
 # ubus -S call luci.pbr getPlatformSupport '{"name": "pbr" }'
-# ubus -S call luci.pbr getUbusInfo '{"name": "pbr" }'
-# ubus -S call luci.pbr getGateways '{"name": "pbr" }'
 # ubus -S call luci.pbr getInterfaces '{"name": "pbr" }'
 
-readonly rpcdCompat='20'
+readonly rpcdCompat='21'
 readonly pbrFunctionsFile="${IPKG_INSTROOT}/etc/init.d/pbr"
 if [ -s "$pbrFunctionsFile" ]; then
 # shellcheck source=../../../../../pbr/files/etc/init.d/pbr
@@ -171,13 +169,6 @@ get_platform_support() {
 	json_cleanup
 }
 
-# shellcheck disable=SC3037
-get_gateways() {
-	echo -en "{\"$packageName\":{\"gateways\":"
-	ubus_get_gateways
-	echo -en "}}"
-}
-
 get_supported_interfaces() {
 	_build_ifaces_supported() { is_supported_interface "$1" && ! str_contains "$ifacesSupported" "$1" && ifacesSupported="${ifacesSupported}${1} "; }
 	_find_firewall_wan_zone() { [ "$(uci_get 'firewall' "$1" 'name')" = "wan" ] && firewallWanZone="$1"; }
@@ -220,19 +211,9 @@ get_supported_interfaces() {
 	json_cleanup
 }
 
-get_ubus_info() {
-	local name
-	name="$(basename "$1")"
-	name="${name:-$packageName}"
-	ubus call service list '{"name":"'"$name"'"}'
-}
-
 case "$1" in
 	list)
 		json_init
-		json_add_object "getGateways"
-			json_add_string 'name' 'name'
-		json_close_object
 		json_add_object "getInitList"
 			json_add_string 'name' 'name'
 		json_close_object
@@ -245,9 +226,6 @@ case "$1" in
 		json_add_object "getPlatformSupport"
 			json_add_string 'name' 'name'
 		json_close_object
-		json_add_object "getUbusInfo"
-			json_add_string 'name' 'name'
-		json_close_object
 		json_add_object "setInitAction"
 			json_add_string 'name' 'name'
 			json_add_string 'action' 'action'
@@ -257,13 +235,6 @@ case "$1" in
 		;;
 	call)
 		case "$2" in
-			getGateways)
-				read -r input
-				json_load "$input"
-				json_get_var name 'name'
-				json_cleanup
-				get_gateways "$packageName"
-				;;
 			getInitList)
 				read -r input
 				json_load "$input"
@@ -291,13 +262,6 @@ case "$1" in
 				json_get_var name 'name'
 				json_cleanup
 				get_platform_support "$packageName"
-				;;
-			getUbusInfo)
-				read -r input
-				json_load "$input"
-				json_get_var name 'name'
-				json_cleanup
-				get_ubus_info "$name"
 				;;
 			setInitAction)
 				read -r input
