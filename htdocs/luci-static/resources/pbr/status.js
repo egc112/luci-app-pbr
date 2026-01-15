@@ -271,7 +271,7 @@ var status = baseclass.extend({
 						'#AWordAboutDefaultRouting" target="_blank">',
 						"</a>"
 					) +
-					"<br />" +
+					"<br />" + "<br />" +
 					_("Please %sdonate%s to support development of this project.").format(
 						"<a href='" + pkg.DonateURL + "' target='_blank'>",
 						"</a>"
