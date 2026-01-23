@@ -10,7 +10,7 @@
 # ubus -S call luci.pbr getPlatformSupport '{"name": "pbr" }'
 # ubus -S call luci.pbr getInterfaces '{"name": "pbr" }'
 
-readonly rpcdCompat='21'
+readonly rpcdCompat='22'
 readonly pbrFunctionsFile="${IPKG_INSTROOT}/etc/init.d/pbr"
 if [ -s "$pbrFunctionsFile" ]; then
 # shellcheck source=../../../../../pbr/files/etc/init.d/pbr
@@ -170,26 +170,16 @@ get_platform_support() {
 
 get_supported_interfaces() {
 	_build_ifaces_supported() { is_supported_interface "$1" && ! str_contains "$ifacesSupported" "$1" && ifacesSupported="${ifacesSupported}${1} "; }
-	_find_firewall_wan_zone() { [ "$(uci_get 'firewall' "$1" 'name')" = "wan" ] && firewallWanZone="$1"; }
+	_find_firewall_wan_zone() { [ "$(uci_get 'firewall' "$1" 'name')" = 'wan' ] && firewallWanZone="$1"; }
 	local i
 	local firewallWanZone
 	local ifacesSupported
-	local webui_show_ignore_target
-	local ignored_interface supported_interface
-	local wanIface4 wanIface6
-	config_load "$packageName"
-	config_get_bool webui_show_ignore_target 'config' 'webui_show_ignore_target' '0'
-	config_get ignored_interface             'config' 'ignored_interface'
-	config_get supported_interface           'config' 'supported_interface'
-	config_get uplink_interface              'config' 'uplink_interface'  'wan'
-	config_get uplink_interface6             'config' 'uplink_interface6' 'wan6'
+	load_package_config 'rpcd'
 	local i
-	wanIface4="$uplink_interface"
-	wanIface6="$uplink_interface6"
 	config_load 'firewall'
 	config_foreach _find_firewall_wan_zone 'zone'
 	for i in $(uci_get 'firewall' "$firewallWanZone" 'network'); do
-		is_supported_interface "$i" && ! str_contains "$ifacesSupported" "$1" && ifacesSupported="${ifacesSupported}${i} "
+		is_supported_interface "$i" && ! str_contains "$ifacesSupported" "$i" && ifacesSupported="${ifacesSupported}${i} "
 	done
 	config_load 'network'
 	config_foreach _build_ifaces_supported 'interface'
