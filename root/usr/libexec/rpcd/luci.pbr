@@ -175,7 +175,6 @@ get_supported_interfaces() {
 	local firewallWanZone
 	local ifacesSupported
 	load_package_config 'rpcd'
-	local i
 	config_load 'firewall'
 	config_foreach _find_firewall_wan_zone 'zone'
 	for i in $(uci_get 'firewall' "$firewallWanZone" 'network'); do
@@ -187,7 +186,7 @@ get_supported_interfaces() {
 	for i in $supported_interface; do
 		is_xray "$i" && ifacesSupported="$ifacesSupported $i"
 	done
-	[ "$webui_show_ignore_target" -eq '1' ] && ifacesSupported="$ifacesSupported ignore"
+	[ "${webui_show_ignore_target:-0}" -eq '1' ] && ifacesSupported="$ifacesSupported ignore"
 	json_init
 	json_add_object "$packageName"
 	json_add_array 'interfaces'
