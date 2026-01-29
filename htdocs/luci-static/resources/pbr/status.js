@@ -11,7 +11,7 @@ var pkg = {
 		return "pbr";
 	},
 	get LuciCompat() {
-		return 23;
+		return 24;
 	},
 	get ReadmeCompat() {
 		return "1.2.1";
@@ -476,7 +476,7 @@ var status = baseclass.extend({
 					errorInvalidOVPNConfig: _(
 						"Invalid OpenVPN config for '%s' interface",
 					),
-					errorNftFileInstall: _("Failed to install fw4 nft file '%s'"),
+					errorNftMainFileInstall: _("Failed to install fw4 nft file '%s'"),
 					errorNoDownloadWithSecureReload: _(
 						"Policy '%s' refers to URL which can't be downloaded in 'secure_reload' mode",
 					),
@@ -501,11 +501,11 @@ var status = baseclass.extend({
 						"Failed to create temporary file with mktemp mask: '%s'",
 					),
 					errorSummary: _("Errors encountered, please check %s"),
-					errorNetifdNftFileInstall: _(
+					errorNftNetifdFileInstall: _(
 						"Netifd setup: failed to install fw4 netifd nft file '%s'",
 					),
-					errorNetifdNftFileRemove: _(
-						"Netifd setup: failed to remove fw4 netifd nft file '%s'",
+					errorNftNetifdFileDelete: _(
+						"Netifd setup: failed to delete fw4 netifd nft file '%s'",
 					),
 					errorNetifdMissingOption: _(
 						"Netifd setup: required option '%s' is missing",

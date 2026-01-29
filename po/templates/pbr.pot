@@ -342,12 +342,12 @@ msgid ""
 "check the %sREADME%s."
 msgstr ""
 
-#: applications/luci-app-pbr/htdocs/luci-static/resources/pbr/status.js:505
-msgid "Netifd setup: failed to install fw4 netifd nft file '%s'"
+#: applications/luci-app-pbr/htdocs/luci-static/resources/pbr/status.js:508
+msgid "Netifd setup: failed to delete fw4 netifd nft file '%s'"
 msgstr ""
 
-#: applications/luci-app-pbr/htdocs/luci-static/resources/pbr/status.js:508
-msgid "Netifd setup: failed to remove fw4 netifd nft file '%s'"
+#: applications/luci-app-pbr/htdocs/luci-static/resources/pbr/status.js:505
+msgid "Netifd setup: failed to install fw4 netifd nft file '%s'"
 msgstr ""
 
 #: applications/luci-app-pbr/htdocs/luci-static/resources/pbr/status.js:514
