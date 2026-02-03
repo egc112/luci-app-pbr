@@ -414,7 +414,10 @@ var status = baseclass.extend({
 						"The %s interface not found, you need to set the 'pbr.config.uplink_interface' option",
 					),
 					errorNoUplinkInterfaceHint: _(
-						"Refer to https://docs.openwrt.melmac.ca/pbr/#uplink_interface",
+						"Refer to %sREADME%s for details",
+					).format(
+						'<a href="' + pkg.URL + '#uplink_interface" target="_blank">',
+						"</a>!<br />",
 					),
 					errorIpsetNameTooLong: _(
 						"The ipset name '%s' is longer than allowed 31 characters",
@@ -485,8 +488,8 @@ var status = baseclass.extend({
 					),
 					errorDownloadUrl: _("Failed to download '%s'"),
 					errorFileSchemaRequiresCurl: _(
-						"The file:// schema requires curl, but it's not detected on this system",
-					),
+						"The '%s' schema requires curl, but it's not detected on this system",
+					).format("file://"),
 					errorTryFailed: _("Command failed: '%s'"),
 					errorIncompatibleUserFile: _(
 						"Incompatible custom user file detected '%s'",
