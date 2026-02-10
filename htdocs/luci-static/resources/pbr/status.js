@@ -11,7 +11,7 @@ var pkg = {
 		return "pbr";
 	},
 	get LuciCompat() {
-		return 24;
+		return 25;
 	},
 	get ReadmeCompat() {
 		return "1.2.1";

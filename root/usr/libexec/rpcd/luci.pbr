@@ -10,7 +10,7 @@
 # ubus -S call luci.pbr getPlatformSupport '{"name": "pbr" }'
 # ubus -S call luci.pbr getInterfaces '{"name": "pbr" }'
 
-readonly rpcdCompat='24'
+readonly rpcdCompat='25'
 readonly pbrFunctionsFile="${IPKG_INSTROOT}/etc/init.d/pbr"
 if [ -s "$pbrFunctionsFile" ]; then
 # shellcheck source=../../../../../pbr/files/etc/init.d/pbr
@@ -171,7 +171,7 @@ get_platform_support() {
 get_supported_interfaces() {
 	_build_ifaces_supported() { 
 		# Skip wan6 interface in split WAN scenarios as it shouldn't be a target for policies
-		if is_split_uplink && is_wan6 "$1"; then
+		if is_split_uplink && is_uplink6 "$1"; then
 			return
 		fi
 		is_supported_interface "$1" && ! str_contains "$ifacesSupported" "$1" && ifacesSupported="${ifacesSupported}${1} "
@@ -185,7 +185,7 @@ get_supported_interfaces() {
 	config_foreach _find_firewall_wan_zone 'zone'
 	for i in $(uci_get 'firewall' "$firewallWanZone" 'network'); do
 		# Skip wan6 interface in split WAN scenarios as it shouldn't be a target for policies
-		if is_split_uplink && is_wan6 "$i"; then
+		if is_split_uplink && is_uplink6 "$i"; then
 			continue
 		fi
 		is_supported_interface "$i" && ! str_contains "$ifacesSupported" "$i" && ifacesSupported="${ifacesSupported}${i} "
