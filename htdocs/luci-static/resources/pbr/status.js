@@ -11,10 +11,10 @@ var pkg = {
 		return "pbr";
 	},
 	get LuciCompat() {
-		return 25;
+		return 26;
 	},
 	get ReadmeCompat() {
-		return "1.2.1";
+		return "1.2.3";
 	},
 	get URL() {
 		return (
