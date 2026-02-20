@@ -358,6 +358,12 @@ var status = baseclass.extend({
 					warningUplinkDown: _(
 						"Uplink/WAN interface is still down, going back to boot mode",
 					),
+					warningDynamicRoutingMode: _(
+						"Running in dynamic routing tables mode. Consider installing netifd extensions or mwan4 for more efficient operation. See %sREADME%s.",
+					).format(
+						'<a href="' + pkg.URL + '#routing-tables-modes" target="_blank">',
+						"</a>",
+					),
 				};
 				var warningsTitle = E(
 					"label",
