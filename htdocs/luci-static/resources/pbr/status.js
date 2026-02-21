@@ -11,7 +11,7 @@ var pkg = {
 		return "pbr";
 	},
 	get LuciCompat() {
-		return 26;
+		return 27;
 	},
 	get ReadmeCompat() {
 		return "1.2.3";
@@ -499,6 +499,9 @@ var status = baseclass.extend({
 					errorTryFailed: _("Command failed: '%s'"),
 					errorIncompatibleUserFile: _(
 						"Incompatible custom user file detected '%s'",
+					),
+					errorUserFileUnsafeNft: _(
+						"Unsafe nft command in custom user file '%s'",
 					),
 					errorDefaultFw4TableMissing: _("Default fw4 table '%s' is missing"),
 					errorDefaultFw4ChainMissing: _("Default fw4 chain '%s' is missing"),
