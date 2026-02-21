@@ -19,11 +19,11 @@ return baseclass.extend({
 			reply = data[0][pkg.Name];
 		} else {
 			reply = {
-				enabled: null,
-				running: null,
-				running_iptables: null,
-				running_nft: null,
-				running_nft_file: null,
+				enabled: false,
+				running: false,
+				running_iptables: false,
+				running_nft: false,
+				running_nft_file: false,
 				version: null,
 				gateways: null,
 				errors: [],

@@ -11,7 +11,7 @@ var pkg = {
 		return "pbr";
 	},
 	get LuciCompat() {
-		return 27;
+		return 28;
 	},
 	get ReadmeCompat() {
 		return "1.2.3";
@@ -69,34 +69,10 @@ var pkg = {
 	},
 };
 
-var getInitList = rpc.declare({
-	object: "luci." + pkg.Name,
-	method: "getInitList",
-	params: ["name"],
-});
-
 var getInitStatus = rpc.declare({
 	object: "luci." + pkg.Name,
 	method: "getInitStatus",
 	params: ["name"],
-});
-
-var getInterfaces = rpc.declare({
-	object: "luci." + pkg.Name,
-	method: "getInterfaces",
-	params: ["name"],
-});
-
-var getPlatformSupport = rpc.declare({
-	object: "luci." + pkg.Name,
-	method: "getPlatformSupport",
-	params: ["name"],
-});
-
-var getServiceInfo = rpc.declare({
-	object: "service",
-	method: "list",
-	params: ["name", "verbose"],
 });
 
 var _setInitAction = rpc.declare({
@@ -176,42 +152,35 @@ var pollServiceStatus = function (callback) {
 
 var status = baseclass.extend({
 	render: function () {
-		return Promise.all([
-			L.resolveDefault(getInitStatus(pkg.Name), {}),
-			L.resolveDefault(getServiceInfo(pkg.Name, true), {}),
-		]).then(function ([initStatus, ubusInfo]) {
-			var reply = {
-				status: initStatus?.[pkg.Name] || {
-					enabled: null,
-					running: null,
-					running_iptables: null,
-					running_nft: null,
-					running_nft_file: null,
-					version: null,
-					packageCompat: 0,
-					rpcdCompat: 0,
-				},
-				ubus: ubusInfo?.[pkg.Name]?.instances?.main?.data || {
-					packageCompat: 0,
-					gateways: [],
-					errors: [],
-					warnings: [],
-				},
+		return L.resolveDefault(getInitStatus(pkg.Name), {}).then(function (initStatus) {
+			var reply = initStatus?.[pkg.Name] || {};
+			reply = {
+				enabled: reply.enabled || false,
+				running: reply.running || false,
+				running_iptables: reply.running_iptables || false,
+				running_nft: reply.running_nft || false,
+				running_nft_file: reply.running_nft_file || false,
+				version: reply.version || null,
+				packageCompat: reply.packageCompat || 0,
+				rpcdCompat: reply.rpcdCompat || 0,
+				gateways: reply.gatewaysList || [],
+				errors: reply.errors || [],
+				warnings: reply.warnings || [],
 			};
 
 			if (
 				pkg.isVersionMismatch(
 					pkg.LuciCompat,
-					reply.status.packageCompat,
-					reply.status.rpcdCompat,
+					reply.packageCompat,
+					reply.rpcdCompat,
 				)
 			) {
-				reply.ubus.warnings.push({
+				reply.warnings.push({
 					code: "warningInternalVersionMismatch",
 					info: [
-						reply.ubus.packageCompat,
+						reply.packageCompat,
 						pkg.LuciCompat,
-						reply.status.rpcdCompat,
+						reply.rpcdCompat,
 						'<a href="' +
 							pkg.URL +
 							'#Warning:InternalVersionMismatch" target="_blank">',
@@ -227,21 +196,21 @@ var status = baseclass.extend({
 				{ class: "cbi-value-title" },
 				_("Service Status"),
 			);
-			if (reply.status.version) {
-				text = _("Version %s").format(reply.status.version) + " - ";
-				if (reply.status.running) {
+			if (reply.version) {
+				text = _("Version %s").format(reply.version) + " - ";
+				if (reply.running) {
 					text += _("Running");
-					if (reply.status.running_iptables) {
+					if (reply.running_iptables) {
 						text += " (" + _("iptables mode") + ").";
-					} else if (reply.status.running_nft_file) {
+					} else if (reply.running_nft_file) {
 						text += " (" + _("fw4 nft file mode") + ").";
-					} else if (reply.status.running_nft) {
+					} else if (reply.running_nft) {
 						text += " (" + _("nft mode") + ").";
 					} else {
 						text += ".";
 					}
 				} else {
-					if (reply.status.enabled) {
+					if (reply.enabled) {
 						text += _("Stopped.");
 					} else {
 						text += _("Stopped (Disabled).");
@@ -258,7 +227,7 @@ var status = baseclass.extend({
 			]);
 
 			var gatewaysDiv = [];
-			if (reply.ubus.gateways) {
+			if (reply.gateways) {
 				var gatewaysTitle = E(
 					"label",
 					{ class: "cbi-value-title" },
@@ -285,7 +254,7 @@ var status = baseclass.extend({
 					{ class: "cbi-value-description" },
 					description,
 				);
-				text = pkg.buildGatewayText(reply.ubus.gateways);
+				text = pkg.buildGatewayText(reply.gateways);
 				var gatewaysText = E("div", {}, text);
 				var gatewaysField = E("div", { class: "cbi-value-field" }, [
 					gatewaysText,
@@ -298,7 +267,7 @@ var status = baseclass.extend({
 			}
 
 			var warningsDiv = [];
-			if (reply.ubus.warnings && reply.ubus.warnings.length) {
+			if (reply.warnings && reply.warnings.length) {
 				var warningTable = {
 					warningInternalVersionMismatch: _(
 						"Internal version mismatch (package: %s, luci app: %s, luci rpcd: %s), you may need to update packages or reboot the device, please check the %sREADME%s.",
@@ -371,7 +340,7 @@ var status = baseclass.extend({
 					_("Service Warnings"),
 				);
 				var text = "";
-				reply.ubus.warnings.forEach((element) => {
+				reply.warnings.forEach((element) => {
 					if (element.code && warningTable[element.code]) {
 						text += pkg.formatMessage(element.info, warningTable[element.code]);
 					} else {
@@ -395,7 +364,7 @@ var status = baseclass.extend({
 			}
 
 			var errorsDiv = [];
-			if (reply.ubus.errors && reply.ubus.errors.length) {
+			if (reply.errors && reply.errors.length) {
 				var errorTable = {
 					errorConfigValidation: _("Config (%s) validation failure").format(
 						"/etc/config/" + pkg.Name,
@@ -551,7 +520,7 @@ var status = baseclass.extend({
 					_("Service Errors"),
 				);
 				var text = "";
-				reply.ubus.errors.forEach((element) => {
+				reply.errors.forEach((element) => {
 					if (element.code && errorTable[element.code]) {
 						text += pkg.formatMessage(element.info, errorTable[element.code]);
 					} else {
@@ -672,10 +641,10 @@ var status = baseclass.extend({
 				_("Disable"),
 			);
 
-			if (reply.status.enabled) {
+			if (reply.enabled) {
 				btn_enable.disabled = true;
 				btn_disable.disabled = false;
-				if (reply.status.running) {
+				if (reply.running) {
 					btn_start.disabled = true;
 					btn_action.disabled = false;
 					btn_stop.disabled = false;
@@ -709,7 +678,7 @@ var status = baseclass.extend({
 				btn_disable,
 			]);
 			var buttonsField = E("div", { class: "cbi-value-field" }, buttonsText);
-			var buttonsDiv = reply.status.version
+			var buttonsDiv = reply.version
 				? E("div", { class: "cbi-value" }, [buttonsTitle, buttonsField])
 				: "";
 
@@ -731,7 +700,7 @@ var status = baseclass.extend({
 				),
 			);
 
-			var donateDiv = reply.status.version
+			var donateDiv = reply.version
 				? E("div", { class: "cbi-value" }, [donateTitle, donateText])
 				: "";
 
@@ -761,6 +730,4 @@ return L.Class.extend({
 	status: status,
 	pkg: pkg,
 	getInitStatus: getInitStatus,
-	getInterfaces: getInterfaces,
-	getPlatformSupport: getPlatformSupport,
 });

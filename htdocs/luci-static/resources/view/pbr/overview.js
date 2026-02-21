@@ -12,27 +12,22 @@ var pkg = pbr.pkg;
 return view.extend({
 	load: function () {
 		return Promise.all([
-			L.resolveDefault(pbr.getInterfaces(pkg.Name), {}),
-			L.resolveDefault(pbr.getPlatformSupport(pkg.Name), {}),
+			L.resolveDefault(pbr.getInitStatus(pkg.Name), {}),
 			L.resolveDefault(L.uci.load(pkg.Name), {}),
 		]);
 	},
 
 	render: function (data) {
 		var status, m, s, o;
+		var statusData = (data[0] && data[0][pkg.Name]) || {};
 		var reply = {
-			interfaces: (data[0] &&
-				data[0][pkg.Name] &&
-				data[0][pkg.Name].interfaces) || ["wan"],
-			platform: (data[1] && data[1][pkg.Name]) || {
-				ipset_installed: null,
-				nft_installed: null,
-				adguardhome_installed: null,
-				dnsmasq_installed: null,
-				unbound_installed: null,
-				adguardhome_ipset_support: null,
-				dnsmasq_ipset_support: null,
-				dnsmasq_nftset_support: null,
+			interfaces: statusData.interfaces || ["wan"],
+			platform: statusData.platform || {
+				nft_installed: false,
+				adguardhome_installed: false,
+				dnsmasq_installed: false,
+				unbound_installed: false,
+				dnsmasq_nftset_support: false,
 			},
 		};
 
@@ -112,14 +107,6 @@ return view.extend({
 			text
 		);
 		o.value("none", _("Disabled"));
-		if (reply.platform.adguardhome_ipset_support) {
-			o.value("adguardhome.ipset", _("AdGuardHome ipset"));
-			o.default = "adguardhome.ipset";
-		}
-		if (reply.platform.dnsmasq_ipset_support) {
-			o.value("dnsmasq.ipset", _("Dnsmasq ipset"));
-			o.default = "dnsmasq.ipset";
-		}
 		if (reply.platform.dnsmasq_nftset_support) {
 			o.value("dnsmasq.nftset", _("Dnsmasq nft set"));
 			o.default = "dnsmasq.nftset";

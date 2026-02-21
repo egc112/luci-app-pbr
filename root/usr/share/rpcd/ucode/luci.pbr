@@ -16,7 +16,7 @@ import pbr from '/lib/pbr/pbr.uc';
 import { stat } from 'fs';
 
 const packageName = 'pbr'; // ucode-lsp disable
-const rpcdCompat = 27; // ucode-lsp disable
+const rpcdCompat = 28; // ucode-lsp disable
 
 // ── rpcd Method Handlers ────────────────────────────────────────────
 
