@@ -348,7 +348,7 @@ var status = baseclass.extend({
 					}
 				});
 				text += _("Warnings encountered, please check the %sREADME%s").format(
-					'<a href="' + pkg.URL + '#WarningMessagesDetails" target="_blank">',
+					'<a href="' + pkg.URL + '#warning-messages-details" target="_blank">',
 					"</a>!<br />",
 				);
 				var warningsText = E("div", { class: "cbi-value-description" }, text);
@@ -528,7 +528,7 @@ var status = baseclass.extend({
 					}
 				});
 				text += _("Errors encountered, please check the %sREADME%s").format(
-					'<a href="' + pkg.URL + '#ErrorMessagesDetails" target="_blank">',
+					'<a href="' + pkg.URL + '#error-messages-details" target="_blank">',
 					"</a>!<br />",
 				);
 				var errorsText = E("div", { class: "cbi-value-description" }, text);

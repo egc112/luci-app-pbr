@@ -47,7 +47,7 @@ return view.extend({
 				"</b>",
 				'<a href="' +
 					pkg.URL +
-					'#ServiceConfigurationSettings" target="_blank">',
+					'#service-configuration-settings" target="_blank">',
 				"</a>",
 				"<br/><br/>"
 			)
@@ -73,7 +73,7 @@ return view.extend({
 			"strict_enforcement",
 			_("Strict enforcement"),
 			_("See the %sREADME%s for details.").format(
-				'<a href="' + pkg.URL + '#StrictEnforcement" target="_blank">',
+				'<a href="' + pkg.URL + '#strict-enforcement" target="_blank">',
 				"</a>"
 			)
 		);
@@ -95,7 +95,7 @@ return view.extend({
 		text += _(
 			"Please check the %sREADME%s before changing this option."
 		).format(
-			'<a href="' + pkg.URL + '#UseResolversSetSupport" target="_blank">',
+			'<a href="' + pkg.URL + '#use-resolvers-set-support" target="_blank">',
 			"</a>"
 		);
 
@@ -131,7 +131,7 @@ return view.extend({
 					"Can be useful if your OpenVPN tunnels have dev option other than tun* or tap* or specific use cases " +
 					"of WireGuard servers. See the %sREADME%s for details."
 			).format(
-				'<a href="' + pkg.URL + '#WireGuardServerUseCases" target="_blank">',
+				'<a href="' + pkg.URL + '#wireguard-server-use-cases" target="_blank">',
 				"</a>"
 			)
 		);
@@ -148,7 +148,7 @@ return view.extend({
 					"have a listen_port defined, are handled automatically, do not add those here." +
 					"See the %sREADME%s for details."
 			).format(
-				'<a href="' + pkg.URL + '#WireGuardServerUseCases" target="_blank">',
+				'<a href="' + pkg.URL + '#wireguard-server-use-cases" target="_blank">',
 				"</a>"
 			)
 		);
@@ -237,7 +237,7 @@ return view.extend({
 			_(
 				"Adds 'ignore' to the list of interfaces for policies. See the %sREADME%s for details."
 			).format(
-				'<a href="' + pkg.URL + '#IgnoreTarget" target="_blank">',
+				'<a href="' + pkg.URL + '#ignore-target" target="_blank">',
 				"</a>"
 			)
 		);
@@ -264,7 +264,7 @@ return view.extend({
 					"addresses/devices/domains and ports can be space separated. Placeholders below represent just " +
 					"the format/syntax and will not be used if fields are left blank. For more information on options, check the %sREADME%s."
 			).format(
-				'<a href="' + pkg.URL + '#PolicyOptions" target="_blank">',
+				'<a href="' + pkg.URL + '#policy-options" target="_blank">',
 				"</a>"
 			)
 		);
@@ -342,7 +342,7 @@ return view.extend({
 				"Name, local address and remote DNS fields are required. Multiple local " +
 					"addresses/devices can be space separated. For more information on options, check the %sREADME%s."
 			).format(
-				'<a href="' + pkg.URL + '#DNSPolicyOptions" target="_blank">',
+				'<a href="' + pkg.URL + '#dns-policy-options" target="_blank">',
 				"</a>"
 			)
 		);
@@ -387,7 +387,7 @@ return view.extend({
 			_(
 				"Set DSCP tags (in range between 1 and 63) for specific interfaces. See the %sREADME%s for details."
 			).format(
-				'<a href="' + pkg.URL + "#DSCPTag-BasedPolicies" + '" target="_blank">',
+				'<a href="' + pkg.URL + "#dscp-tag-based-policies" + '" target="_blank">',
 				"</a>"
 			)
 		);
@@ -410,7 +410,7 @@ return view.extend({
 				"Run the following user files after setting up but before restarting DNSMASQ. " +
 					"See the %sREADME%s for details."
 			).format(
-				'<a href="' + pkg.URL + '#CustomUserFiles" target="_blank">',
+				'<a href="' + pkg.URL + '#custom-user-files" target="_blank">',
 				"</a>"
 			)
 		);
