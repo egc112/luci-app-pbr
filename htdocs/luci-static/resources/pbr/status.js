@@ -44,28 +44,30 @@ var pkg = {
 				: template.format(info || " ")) + "<br />"
 		);
 	},
-	buildGatewayText: function (gw) {
+	buildGatewayElements: function (gw) {
 		const gateways = Array.isArray(gw) ? gw : Object.values(gw);
-		const lines = gateways.map((g) => {
+		const elements = [];
+		gateways.forEach(function (g) {
 			const iface = g.name;
-			if (!iface) return "";
-			const dev_ipv4 = g.device_ipv4;
-			const gw_ipv4 = g.gateway_ipv4;
-			const dev_ipv6 = g.device_ipv6;
-			const gw_ipv6 = g.gateway_ipv6;
-			const default_gw = g.default;
+			if (!iface) return;
+			if (elements.length) elements.push(E("br"));
 			const parts = [iface];
-			if (dev_ipv4 && dev_ipv4 !== iface) parts.push(dev_ipv4);
-			if (gw_ipv4) parts.push(gw_ipv4);
-			if (gw_ipv6) {
-				if (dev_ipv6 && dev_ipv6 !== iface) parts.push(dev_ipv6);
-				parts.push(gw_ipv6);
+			if (g.device_ipv4 && g.device_ipv4 !== iface) parts.push(g.device_ipv4);
+			if (g.gateway_ipv4) parts.push(g.gateway_ipv4);
+			if (g.gateway_ipv6) {
+				if (g.device_ipv6 && g.device_ipv6 !== iface)
+					parts.push(g.device_ipv6);
+				parts.push(g.gateway_ipv6);
 			}
-			let line = parts.join("/");
-			if (default_gw) line += " ✓";
-			return line;
+			var line = parts.join("/");
+			if (g.default) {
+				elements.push(line + " ");
+				elements.push(E("strong", {}, "✓"));
+			} else {
+				elements.push(line);
+			}
 		});
-		return lines.join("<br />");
+		return elements;
 	},
 };
 
@@ -233,7 +235,7 @@ var status = baseclass.extend({
 					{ class: "cbi-value-title" },
 					_("Service Gateways"),
 				);
-				var description =
+				var gatewaysDescr = E("div", { class: "cbi-value-description" },
 					_(
 						"The %s indicates default gateway. See the %sREADME%s for details.",
 					).format(
@@ -245,17 +247,13 @@ var status = baseclass.extend({
 					) +
 					"<br />" +
 					"<br />" +
-					_("Please %sdonate%s to support development of this project.").format(
+					_(
+						"Please %sdonate%s to support development of this project.",
+					).format(
 						"<a href='" + pkg.DonateURL + "' target='_blank'>",
 						"</a>",
-					);
-				var gatewaysDescr = E(
-					"div",
-					{ class: "cbi-value-description" },
-					description,
-				);
-				text = pkg.buildGatewayText(reply.gateways);
-				var gatewaysText = E("div", {}, text);
+					));
+				var gatewaysText = E("div", {}, pkg.buildGatewayElements(reply.gateways));
 				var gatewaysField = E("div", { class: "cbi-value-field" }, [
 					gatewaysText,
 					gatewaysDescr,
