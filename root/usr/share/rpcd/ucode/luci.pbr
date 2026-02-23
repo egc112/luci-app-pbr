@@ -12,11 +12,11 @@ ubus call luci.pbr getInterfaces '{"name":"pbr"}'
 ubus call luci.pbr setInitAction '{"name":"pbr","action":"start"}'
 */
 
-import pbr from '/lib/pbr/pbr.uc';
+import create_pbr from '/lib/pbr/pbr.uc';
 import { stat } from 'fs';
 
 const packageName = 'pbr'; // ucode-lsp disable
-const rpcdCompat = 28; // ucode-lsp disable
+const rpcdCompat = 30; // ucode-lsp disable
 
 // ── rpcd Method Handlers ────────────────────────────────────────────
 
@@ -25,6 +25,7 @@ const methods = {
 		args: { name: 'name' },
 		call: function(req) {
 			let name = req.args?.name || packageName;
+			let pbr = create_pbr();
 			return pbr.get_init_list(name);
 		}
 	},
@@ -32,6 +33,7 @@ const methods = {
 		args: { name: 'name' },
 		call: function(req) {
 			let name = req.args?.name || packageName;
+			let pbr = create_pbr();
 			let result = pbr.get_init_status(name);
 			if (result[name])
 				result[name].rpcdCompat = rpcdCompat;
@@ -42,6 +44,7 @@ const methods = {
 		args: { name: 'name' },
 		call: function(req) {
 			let name = req.args?.name || packageName;
+			let pbr = create_pbr();
 			return pbr.get_supported_interfaces(name);
 		}
 	},
@@ -49,6 +52,7 @@ const methods = {
 		args: { name: 'name' },
 		call: function(req) {
 			let name = req.args?.name || packageName;
+			let pbr = create_pbr();
 			return pbr.get_platform_support(name);
 		}
 	},
