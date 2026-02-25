@@ -17,7 +17,7 @@ msgid ""
 "caution!%s"
 msgstr ""
 
-#: applications/luci-app-pbr/htdocs/luci-static/resources/view/status/include/72_pbr.js:40
+#: applications/luci-app-pbr/htdocs/luci-static/resources/view/status/include/72_pbr.js:26
 msgid "Active"
 msgstr ""
 
@@ -231,11 +231,11 @@ msgstr ""
 msgid "Ignored Interfaces"
 msgstr ""
 
-#: applications/luci-app-pbr/htdocs/luci-static/resources/view/status/include/72_pbr.js:52
+#: applications/luci-app-pbr/htdocs/luci-static/resources/view/status/include/72_pbr.js:38
 msgid "Inactive"
 msgstr ""
 
-#: applications/luci-app-pbr/htdocs/luci-static/resources/view/status/include/72_pbr.js:54
+#: applications/luci-app-pbr/htdocs/luci-static/resources/view/status/include/72_pbr.js:40
 msgid "Inactive (Disabled)"
 msgstr ""
 
@@ -310,7 +310,7 @@ msgstr ""
 msgid "Mismatched IP family between in policy '%s'"
 msgstr ""
 
-#: applications/luci-app-pbr/htdocs/luci-static/resources/view/status/include/72_pbr.js:65
+#: applications/luci-app-pbr/htdocs/luci-static/resources/view/status/include/72_pbr.js:51
 msgid "Mode"
 msgstr ""
 
@@ -363,7 +363,7 @@ msgid "No Change"
 msgstr ""
 
 #: applications/luci-app-pbr/htdocs/luci-static/resources/pbr/status.js:222
-#: applications/luci-app-pbr/htdocs/luci-static/resources/view/status/include/72_pbr.js:58
+#: applications/luci-app-pbr/htdocs/luci-static/resources/view/status/include/72_pbr.js:44
 msgid "Not installed or not found"
 msgstr ""
 
@@ -594,7 +594,7 @@ msgid ""
 "changed by user."
 msgstr ""
 
-#: applications/luci-app-pbr/htdocs/luci-static/resources/view/status/include/72_pbr.js:63
+#: applications/luci-app-pbr/htdocs/luci-static/resources/view/status/include/72_pbr.js:49
 msgid "Status"
 msgstr ""
 
@@ -684,6 +684,10 @@ msgstr ""
 msgid "The principal package (pbr) is outdated, please update it"
 msgstr ""
 
+#: applications/luci-app-pbr/htdocs/luci-static/resources/view/status/include/72_pbr.js:63
+msgid "Unable to retrieve %s status"
+msgstr ""
+
 #: applications/luci-app-pbr/htdocs/luci-static/resources/pbr/status.js:402
 #: applications/luci-app-pbr/htdocs/luci-static/resources/pbr/status.js:502
 msgid "Unexpected exit or service termination: '%s'"
@@ -753,7 +757,7 @@ msgstr ""
 msgid "Verbose output"
 msgstr ""
 
-#: applications/luci-app-pbr/htdocs/luci-static/resources/view/status/include/72_pbr.js:64
+#: applications/luci-app-pbr/htdocs/luci-static/resources/view/status/include/72_pbr.js:50
 msgid "Version"
 msgstr ""
 
@@ -782,20 +786,20 @@ msgid "all"
 msgstr ""
 
 #: applications/luci-app-pbr/htdocs/luci-static/resources/pbr/status.js:208
-#: applications/luci-app-pbr/htdocs/luci-static/resources/view/status/include/72_pbr.js:44
+#: applications/luci-app-pbr/htdocs/luci-static/resources/view/status/include/72_pbr.js:30
 msgid "fw4 nft file mode"
 msgstr ""
 
 #: applications/luci-app-pbr/htdocs/luci-static/resources/pbr/status.js:206
-#: applications/luci-app-pbr/htdocs/luci-static/resources/view/status/include/72_pbr.js:42
+#: applications/luci-app-pbr/htdocs/luci-static/resources/view/status/include/72_pbr.js:28
 msgid "iptables mode"
 msgstr ""
 
 #: applications/luci-app-pbr/htdocs/luci-static/resources/pbr/status.js:210
-#: applications/luci-app-pbr/htdocs/luci-static/resources/view/status/include/72_pbr.js:46
+#: applications/luci-app-pbr/htdocs/luci-static/resources/view/status/include/72_pbr.js:32
 msgid "nft mode"
 msgstr ""
 
-#: applications/luci-app-pbr/htdocs/luci-static/resources/view/status/include/72_pbr.js:48
+#: applications/luci-app-pbr/htdocs/luci-static/resources/view/status/include/72_pbr.js:34
 msgid "unknown"
 msgstr ""
