@@ -337,7 +337,7 @@ var status = baseclass.extend({
 					{ class: "cbi-value-title" },
 					_("Service Warnings"),
 				);
-				var text = "";
+				text = "";
 				reply.warnings.forEach((element) => {
 					if (element.code && warningTable[element.code]) {
 						text += pkg.formatMessage(element.info, warningTable[element.code]);
@@ -517,7 +517,7 @@ var status = baseclass.extend({
 					{ class: "cbi-value-title" },
 					_("Service Errors"),
 				);
-				var text = "";
+				text = "";
 				reply.errors.forEach((element) => {
 					if (element.code && errorTable[element.code]) {
 						text += pkg.formatMessage(element.info, errorTable[element.code]);

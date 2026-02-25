@@ -6,6 +6,7 @@
 "require rpc";
 "require view";
 "require pbr.status as pbr";
+/* globals pbr */
 
 var pkg = pbr.pkg;
 
