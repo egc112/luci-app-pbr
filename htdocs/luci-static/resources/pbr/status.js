@@ -364,7 +364,7 @@ var status = baseclass.extend({
 					{ class: "cbi-value-title" },
 					_("Service Warnings"),
 				);
-				var text = "";
+				text = "";
 				reply.ubus.warnings.forEach((element) => {
 					if (element.code && warningTable[element.code]) {
 						text += pkg.formatMessage(element.info, warningTable[element.code]);
@@ -522,16 +522,13 @@ var status = baseclass.extend({
 					errorUplinkDown: _(
 						"Uplink/WAN interface is still down, increase value of 'procd_boot_trigger_delay' option",
 					),
-					errorUnexpectedExit: _(
-						"Unexpected exit or service termination: '%s'",
-					),
 				};
 				var errorsTitle = E(
 					"label",
 					{ class: "cbi-value-title" },
 					_("Service Errors"),
 				);
-				var text = "";
+				text = "";
 				reply.ubus.errors.forEach((element) => {
 					if (element.code && errorTable[element.code]) {
 						text += pkg.formatMessage(element.info, errorTable[element.code]);

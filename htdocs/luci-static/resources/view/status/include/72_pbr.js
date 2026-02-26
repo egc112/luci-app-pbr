@@ -3,6 +3,7 @@
 "require form";
 "require baseclass";
 "require pbr.status as pbr";
+/* global pbr */
 
 var pkg = pbr.pkg;
 
