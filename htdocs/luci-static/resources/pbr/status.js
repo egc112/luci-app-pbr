@@ -525,16 +525,6 @@ var status = baseclass.extend({
 					errorUnexpectedExit: _(
 						"Unexpected exit or service termination: '%s'",
 					),
-					errorNoDownloadWithSecureReload: _(
-						"Policy '%s' refers to URL which can't be downloaded in 'secure_reload' mode",
-					),
-					errorIncompatibleUserFile: _(
-						"Incompatible custom user file detected '%s'",
-					),
-					errorTryFailed: _("Command failed: '%s'"),
-					errorMktempFileCreate: _(
-						"Failed to create temporary file with mktemp mask: '%s'",
-					),
 				};
 				var errorsTitle = E(
 					"label",

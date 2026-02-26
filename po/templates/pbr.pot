@@ -68,7 +68,6 @@ msgid "Chain"
 msgstr ""
 
 #: applications/luci-app-pbr/htdocs/luci-static/resources/pbr/status.js:493
-#: applications/luci-app-pbr/htdocs/luci-static/resources/pbr/status.js:534
 msgid "Command failed: '%s'"
 msgstr ""
 
@@ -116,7 +115,7 @@ msgstr ""
 msgid "Default fw4 table '%s' is missing"
 msgstr ""
 
-#: applications/luci-app-pbr/htdocs/luci-static/resources/pbr/status.js:663
+#: applications/luci-app-pbr/htdocs/luci-static/resources/pbr/status.js:653
 msgid "Disable"
 msgstr ""
 
@@ -126,7 +125,7 @@ msgstr ""
 msgid "Disabled"
 msgstr ""
 
-#: applications/luci-app-pbr/htdocs/luci-static/resources/pbr/status.js:657
+#: applications/luci-app-pbr/htdocs/luci-static/resources/pbr/status.js:647
 msgid "Disabling %s service"
 msgstr ""
 
@@ -152,11 +151,11 @@ msgstr ""
 msgid "Do not enforce policies when their gateway is down"
 msgstr ""
 
-#: applications/luci-app-pbr/htdocs/luci-static/resources/pbr/status.js:710
+#: applications/luci-app-pbr/htdocs/luci-static/resources/pbr/status.js:700
 msgid "Donate to the Project"
 msgstr ""
 
-#: applications/luci-app-pbr/htdocs/luci-static/resources/pbr/status.js:644
+#: applications/luci-app-pbr/htdocs/luci-static/resources/pbr/status.js:634
 msgid "Enable"
 msgstr ""
 
@@ -168,7 +167,7 @@ msgstr ""
 msgid "Enabled"
 msgstr ""
 
-#: applications/luci-app-pbr/htdocs/luci-static/resources/pbr/status.js:638
+#: applications/luci-app-pbr/htdocs/luci-static/resources/pbr/status.js:628
 msgid "Enabling %s service"
 msgstr ""
 
@@ -180,7 +179,7 @@ msgstr ""
 msgid "Errors encountered, please check %s"
 msgstr ""
 
-#: applications/luci-app-pbr/htdocs/luci-static/resources/pbr/status.js:552
+#: applications/luci-app-pbr/htdocs/luci-static/resources/pbr/status.js:542
 msgid "Errors encountered, please check the %sREADME%s"
 msgstr ""
 
@@ -191,7 +190,6 @@ msgid ""
 msgstr ""
 
 #: applications/luci-app-pbr/htdocs/luci-static/resources/pbr/status.js:504
-#: applications/luci-app-pbr/htdocs/luci-static/resources/pbr/status.js:536
 msgid "Failed to create temporary file with mktemp mask: '%s'"
 msgstr ""
 
@@ -252,7 +250,6 @@ msgid "Incompatible DHCP Option 6 for interface %s"
 msgstr ""
 
 #: applications/luci-app-pbr/htdocs/luci-static/resources/pbr/status.js:495
-#: applications/luci-app-pbr/htdocs/luci-static/resources/pbr/status.js:532
 msgid "Incompatible custom user file detected '%s'"
 msgstr ""
 
@@ -384,7 +381,7 @@ msgid "Path"
 msgstr ""
 
 #: applications/luci-app-pbr/htdocs/luci-static/resources/pbr/status.js:279
-#: applications/luci-app-pbr/htdocs/luci-static/resources/pbr/status.js:718
+#: applications/luci-app-pbr/htdocs/luci-static/resources/pbr/status.js:708
 msgid "Please %sdonate%s to support development of this project."
 msgstr ""
 
@@ -434,7 +431,6 @@ msgid "Policy '%s' has no source/destination parameters"
 msgstr ""
 
 #: applications/luci-app-pbr/htdocs/luci-static/resources/pbr/status.js:484
-#: applications/luci-app-pbr/htdocs/luci-static/resources/pbr/status.js:529
 msgid ""
 "Policy '%s' refers to URL which can't be downloaded in 'secure_reload' mode"
 msgstr ""
@@ -509,11 +505,11 @@ msgid ""
 "Resolver set support (%s) requires nftables, but nft binary cannot be found"
 msgstr ""
 
-#: applications/luci-app-pbr/htdocs/luci-static/resources/pbr/status.js:606
+#: applications/luci-app-pbr/htdocs/luci-static/resources/pbr/status.js:596
 msgid "Restart"
 msgstr ""
 
-#: applications/luci-app-pbr/htdocs/luci-static/resources/pbr/status.js:600
+#: applications/luci-app-pbr/htdocs/luci-static/resources/pbr/status.js:590
 msgid "Restarting %s service"
 msgstr ""
 
@@ -539,11 +535,11 @@ msgstr ""
 msgid "Select Add for -A/add and Insert for -I/Insert."
 msgstr ""
 
-#: applications/luci-app-pbr/htdocs/luci-static/resources/pbr/status.js:689
+#: applications/luci-app-pbr/htdocs/luci-static/resources/pbr/status.js:679
 msgid "Service Control"
 msgstr ""
 
-#: applications/luci-app-pbr/htdocs/luci-static/resources/pbr/status.js:542
+#: applications/luci-app-pbr/htdocs/luci-static/resources/pbr/status.js:532
 msgid "Service Errors"
 msgstr ""
 
@@ -574,11 +570,11 @@ msgstr ""
 msgid "Skipping IPv6 policy '%s' as IPv6 support is disabled"
 msgstr ""
 
-#: applications/luci-app-pbr/htdocs/luci-static/resources/pbr/status.js:587
+#: applications/luci-app-pbr/htdocs/luci-static/resources/pbr/status.js:577
 msgid "Start"
 msgstr ""
 
-#: applications/luci-app-pbr/htdocs/luci-static/resources/pbr/status.js:581
+#: applications/luci-app-pbr/htdocs/luci-static/resources/pbr/status.js:571
 msgid "Starting %s service"
 msgstr ""
 
@@ -600,7 +596,7 @@ msgstr ""
 msgid "Status"
 msgstr ""
 
-#: applications/luci-app-pbr/htdocs/luci-static/resources/pbr/status.js:625
+#: applications/luci-app-pbr/htdocs/luci-static/resources/pbr/status.js:615
 msgid "Stop"
 msgstr ""
 
@@ -612,7 +608,7 @@ msgstr ""
 msgid "Stopped."
 msgstr ""
 
-#: applications/luci-app-pbr/htdocs/luci-static/resources/pbr/status.js:619
+#: applications/luci-app-pbr/htdocs/luci-static/resources/pbr/status.js:609
 msgid "Stopping %s service"
 msgstr ""
 
@@ -703,7 +699,7 @@ msgstr ""
 msgid "Unknown entry in policy '%s'"
 msgstr ""
 
-#: applications/luci-app-pbr/htdocs/luci-static/resources/pbr/status.js:549
+#: applications/luci-app-pbr/htdocs/luci-static/resources/pbr/status.js:539
 msgid "Unknown error"
 msgstr ""
 
