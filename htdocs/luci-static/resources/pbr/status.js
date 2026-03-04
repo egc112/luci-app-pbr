@@ -202,8 +202,8 @@ var status = baseclass.extend({
 			var text;
 			var header = E("h2", {}, _("Policy Based Routing - Status"));
 			var statusTitle = E(
-				"div",
-				{ class: "cbi-value-title" },
+				"label",
+				{ class: "cbi-value-title", for: pkg.Name + "-status" },
 				_("Service Status"),
 			);
 			if (reply.version) {
@@ -229,7 +229,7 @@ var status = baseclass.extend({
 			} else {
 				text = _("Not installed or not found");
 			}
-			var statusText = E("div", {}, text);
+			var statusText = E("output", { id: pkg.Name + "-status" }, text);
 			var statusField = E("div", { class: "cbi-value-field" }, statusText);
 			var statusDiv = E("div", { class: "cbi-value" }, [
 				statusTitle,
@@ -239,8 +239,8 @@ var status = baseclass.extend({
 			var gatewaysDiv = [];
 			if (reply.gateways) {
 				var gatewaysTitle = E(
-					"div",
-					{ class: "cbi-value-title" },
+					"label",
+					{ class: "cbi-value-title", for: pkg.Name + "-gateways" },
 					_("Service Gateways"),
 				);
 				var gatewaysDescr = E("div", { class: "cbi-value-description" },
@@ -261,7 +261,7 @@ var status = baseclass.extend({
 						"<a href='" + pkg.DonateURL + "' target='_blank'>",
 						"</a>",
 					));
-				var gatewaysText = E("div", {}, pkg.buildGatewayElements(reply.gateways));
+				var gatewaysText = E("output", { id: pkg.Name + "-gateways" }, pkg.buildGatewayElements(reply.gateways));
 				var gatewaysField = E("div", { class: "cbi-value-field" }, [
 					gatewaysText,
 					gatewaysDescr,
@@ -341,8 +341,8 @@ var status = baseclass.extend({
 					),
 				};
 				var warningsTitle = E(
-					"div",
-					{ class: "cbi-value-title" },
+					"label",
+					{ class: "cbi-value-title", for: pkg.Name + "-warnings" },
 					_("Service Warnings"),
 				);
 				text = "";
@@ -357,7 +357,7 @@ var status = baseclass.extend({
 					'<a href="' + pkg.URL + '#warning-messages-details" target="_blank">',
 					"</a>!<br />",
 				);
-				var warningsText = E("div", { class: "cbi-value-description" }, text);
+				var warningsText = E("output", { id: pkg.Name + "-warnings", class: "cbi-value-description" }, text);
 				var warningsField = E(
 					"div",
 					{ class: "cbi-value-field" },
@@ -508,8 +508,8 @@ var status = baseclass.extend({
 					),
 				};
 				var errorsTitle = E(
-					"div",
-					{ class: "cbi-value-title" },
+					"label",
+					{ class: "cbi-value-title", for: pkg.Name + "-errors" },
 					_("Service Errors"),
 				);
 				text = "";
@@ -524,7 +524,7 @@ var status = baseclass.extend({
 					'<a href="' + pkg.URL + '#error-messages-details" target="_blank">',
 					"</a>!<br />",
 				);
-				var errorsText = E("div", { class: "cbi-value-description" }, text);
+				var errorsText = E("output", { id: pkg.Name + "-errors", class: "cbi-value-description" }, text);
 				var errorsField = E("div", { class: "cbi-value-field" }, errorsText);
 				errorsDiv = E("div", { class: "cbi-value" }, [
 					errorsTitle,
@@ -655,11 +655,11 @@ var status = baseclass.extend({
 			}
 
 			var buttonsTitle = E(
-				"div",
-				{ class: "cbi-value-title" },
+				"label",
+				{ class: "cbi-value-title", for: pkg.Name + "-buttons" },
 				_("Service Control"),
 			);
-			var buttonsText = E("div", {}, [
+			var buttonsText = E("output", { id: pkg.Name + "-buttons" }, [
 				btn_start,
 				btn_gap,
 				btn_action,
@@ -676,16 +676,16 @@ var status = baseclass.extend({
 				: "";
 
 			var donateTitle = E(
-				"div",
-				{ class: "cbi-value-title" },
+				"label",
+				{ class: "cbi-value-title", for: pkg.Name + "-donate" },
 				_("Donate to the Project"),
 			);
 			var donateText = E(
 				"div",
 				{ class: "cbi-value-field" },
 				E(
-					"div",
-					{ class: "cbi-value-description" },
+					"output",
+					{ id: pkg.Name + "-donate", class: "cbi-value-description" },
 					_("Please %sdonate%s to support development of this project.").format(
 						"<a href='" + pkg.DonateURL + "' target='_blank'>",
 						"</a>",
