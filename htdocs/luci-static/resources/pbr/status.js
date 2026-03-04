@@ -202,7 +202,7 @@ var status = baseclass.extend({
 			var text;
 			var header = E("h2", {}, _("Policy Based Routing - Status"));
 			var statusTitle = E(
-				"label",
+				"div",
 				{ class: "cbi-value-title" },
 				_("Service Status"),
 			);
@@ -239,7 +239,7 @@ var status = baseclass.extend({
 			var gatewaysDiv = [];
 			if (reply.gateways) {
 				var gatewaysTitle = E(
-					"label",
+					"div",
 					{ class: "cbi-value-title" },
 					_("Service Gateways"),
 				);
@@ -341,7 +341,7 @@ var status = baseclass.extend({
 					),
 				};
 				var warningsTitle = E(
-					"label",
+					"div",
 					{ class: "cbi-value-title" },
 					_("Service Warnings"),
 				);
@@ -508,7 +508,7 @@ var status = baseclass.extend({
 					),
 				};
 				var errorsTitle = E(
-					"label",
+					"div",
 					{ class: "cbi-value-title" },
 					_("Service Errors"),
 				);
@@ -655,7 +655,7 @@ var status = baseclass.extend({
 			}
 
 			var buttonsTitle = E(
-				"label",
+				"div",
 				{ class: "cbi-value-title" },
 				_("Service Control"),
 			);
@@ -676,7 +676,7 @@ var status = baseclass.extend({
 				: "";
 
 			var donateTitle = E(
-				"label",
+				"div",
 				{ class: "cbi-value-title" },
 				_("Donate to the Project"),
 			);
