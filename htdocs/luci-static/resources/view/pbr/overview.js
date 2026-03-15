@@ -23,6 +23,7 @@ return view.extend({
 		var statusData = (data[0] && data[0][pkg.Name]) || {};
 		var reply = {
 			interfaces: statusData.interfaces || ["wan"],
+			protocols: statusData.protocols || [],
 			platform: statusData.platform || {
 				nft_installed: false,
 				adguardhome_installed: false,
@@ -247,15 +248,6 @@ return view.extend({
 		o.default = "0";
 		o.optional = false;
 
-		o = s.taboption(
-			"tab_webui",
-			form.DynamicList,
-			"webui_supported_protocol",
-			_("Supported Protocols"),
-			_("Display these protocols in protocol column in Web UI.")
-		);
-		o.optional = false;
-
 		s = m.section(
 			form.GridSection,
 			"policy",
@@ -305,21 +297,69 @@ return view.extend({
 		o.default = "";
 
 		o = s.option(form.ListValue, "proto", _("Protocol"));
-		var proto = L.toArray(
-			L.uci.get(pkg.Name, "config", "webui_supported_protocol")
-		);
-		if (!proto.length) {
-			proto = ["all", "tcp", "udp", "tcp udp", "icmp"];
-		}
-		proto.forEach((element) => {
-			if (element === "all") {
-				o.value("", _("all"));
-				o.default = "";
-			} else {
-				o.value(element.toLowerCase());
+		o.value("", _("all"));
+		o.default = "";
+		var popularProtos = ["tcp", "udp", "tcp udp", "icmp"];
+		var hasPopular = false;
+		popularProtos.forEach(function (p) {
+			if (p === "tcp udp") {
+				if (reply.protocols.indexOf("tcp") !== -1 && reply.protocols.indexOf("udp") !== -1) {
+					o.value(p);
+					hasPopular = true;
+				}
+			} else if (reply.protocols.indexOf(p) !== -1) {
+				o.value(p);
+				hasPopular = true;
+			}
+		});
+		var hasOther = false;
+		reply.protocols.forEach(function (p) {
+			if (popularProtos.indexOf(p) === -1) {
+				o.value(p);
+				hasOther = true;
 			}
 		});
 		o.rmempty = true;
+		if (hasPopular && hasOther) {
+			var _protoRenderWidget = o.renderWidget;
+			o.renderWidget = function () {
+				var node = _protoRenderWidget.apply(this, arguments);
+				var sel = node.querySelector ? node.querySelector("select") : null;
+				if (!sel && node.nodeName === "SELECT") sel = node;
+				if (sel) {
+					var lastOpt = null;
+					sel.querySelectorAll("option").forEach(function (opt) {
+						if (popularProtos.indexOf(opt.value) !== -1)
+							lastOpt = opt;
+					});
+					if (lastOpt && lastOpt.nextElementSibling) {
+						sel.insertBefore(
+							E("option", { "disabled": "", "style": "text-align:center" },
+								"── " + _("All Protocols") + " ──"),
+							lastOpt.nextSibling
+						);
+					}
+				}
+				var ul = node.querySelector ? node.querySelector("ul") : null;
+				if (ul) {
+					var lastLi = null;
+					ul.querySelectorAll("li[data-value]").forEach(function (li) {
+						if (popularProtos.indexOf(li.getAttribute("data-value")) !== -1)
+							lastLi = li;
+					});
+					if (lastLi && lastLi.nextElementSibling) {
+						lastLi.parentNode.insertBefore(
+							E("li", {
+								"unselectable": "",
+								"style": "text-align:center;opacity:0.6;font-size:90%"
+							}, "── " + _("All Protocols") + " ──"),
+							lastLi.nextSibling
+						);
+					}
+				}
+				return node;
+			};
+		}
 
 		o = s.option(form.ListValue, "chain", _("Chain"));
 		o.value("", "prerouting");
