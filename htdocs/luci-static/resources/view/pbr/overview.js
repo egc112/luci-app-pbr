@@ -55,8 +55,6 @@ return view.extend({
 			)
 		);
 
-		s.tab("tab_webui", _("Web UI Configuration"));
-
 		o = s.taboption(
 			"tab_basic",
 			form.ListValue,
@@ -230,23 +228,6 @@ return view.extend({
 		o.placeholder = "30000";
 		o.datatype = "uinteger";
 		o.default = "30000";
-
-		o = s.taboption(
-			"tab_webui",
-			form.ListValue,
-			"webui_show_ignore_target",
-			_("Add Ignore Target"),
-			_(
-				"Adds 'ignore' to the list of interfaces for policies. See the %sREADME%s for details."
-			).format(
-				'<a href="' + pkg.URL + '#ignore-target" target="_blank">',
-				"</a>"
-			)
-		);
-		o.value("0", _("Disabled"));
-		o.value("1", _("Enabled"));
-		o.default = "0";
-		o.optional = false;
 
 		s = m.section(
 			form.GridSection,
