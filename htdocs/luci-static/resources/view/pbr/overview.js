@@ -136,6 +136,19 @@ return view.extend({
 			)
 		);
 		o.optional = false;
+		o.write = function (section_id, formvalue) {
+			if (Array.isArray(formvalue))
+				formvalue = formvalue.map(function (v) {
+					return String(v).toLowerCase();
+				});
+			else if (formvalue != null)
+				formvalue = String(formvalue).toLowerCase();
+			return form.DynamicList.prototype.write.call(
+				this,
+				section_id,
+				formvalue
+			);
+		};
 
 		o = s.taboption(
 			"tab_advanced",
@@ -153,6 +166,19 @@ return view.extend({
 			)
 		);
 		o.optional = false;
+		o.write = function (section_id, formvalue) {
+			if (Array.isArray(formvalue))
+				formvalue = formvalue.map(function (v) {
+					return String(v).toLowerCase();
+				});
+			else if (formvalue != null)
+				formvalue = String(formvalue).toLowerCase();
+			return form.DynamicList.prototype.write.call(
+				this,
+				section_id,
+				formvalue
+			);
+		};
 
 		o = s.taboption(
 			"tab_advanced",
