@@ -677,6 +677,10 @@ msgstr ""
 msgid "Unknown IPv6 Link type for device '%s'"
 msgstr ""
 
+#: applications/luci-app-pbr/htdocs/luci-static/resources/pbr/status.js:488
+msgid "Unknown Gateway for device '%s'"
+msgstr ""
+
 #: applications/luci-app-pbr/htdocs/luci-static/resources/pbr/status.js:452
 msgid "Unknown entry in policy '%s'"
 msgstr ""

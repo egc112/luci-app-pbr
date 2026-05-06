@@ -11,7 +11,7 @@ var pkg = {
 		return "pbr";
 	},
 	get LuciCompat() {
-		return 31;
+		return 32;
 	},
 	get ReadmeCompat() {
 		return "1.2.3";
@@ -483,6 +483,9 @@ var status = baseclass.extend({
 					errorRequiredBinaryMissing: _("Required binary '%s' is missing"),
 					errorInterfaceRoutingUnknownDevType: _(
 						"Unknown IPv6 Link type for device '%s'",
+					),
+					errorInterfaceRoutingUnknownGateway: _(
+						"Unknown Gateway for device '%s'",
 					),
 					errorMktempFileCreate: _(
 						"Failed to create temporary file with mktemp mask: '%s'",
