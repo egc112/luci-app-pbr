@@ -23,6 +23,7 @@ return view.extend({
 		var statusData = (data[0] && data[0][pkg.Name]) || {};
 		var reply = {
 			interfaces: statusData.interfaces || ["wan"],
+			interface_labels: statusData.interface_labels || {},
 			protocols: statusData.protocols || [],
 			platform: statusData.platform || {
 				nft_installed: false,
@@ -175,7 +176,7 @@ return view.extend({
 		o.value("", _("No Change"));
 		reply.interfaces.forEach((element) => {
 			if (element.toLowerCase() !== "ignore") {
-				o.value(element);
+				o.value(element, reply.interface_labels[element] || element);
 			}
 		});
 		o.rmempty = true;
@@ -351,7 +352,7 @@ return view.extend({
 
 		o = s.option(form.ListValue, "interface", _("Interface"));
 		reply.interfaces.forEach((element) => {
-			o.value(element);
+			o.value(element, reply.interface_labels[element] || element);
 		});
 		o.datatype = "network";
 		o.rmempty = false;
@@ -392,7 +393,7 @@ return view.extend({
 		o.rmempty = false;
 		o.datatype = "list(or(cidr,host,network,ipaddr))";
 		reply.interfaces.forEach((element) => {
-			element === "ignore" || o.value(element);
+			element === "ignore" || o.value(element, reply.interface_labels[element] || element);
 		});
 
 		o = s.option(form.Value, "dest_dns_port", _("Remote DNS Port"));

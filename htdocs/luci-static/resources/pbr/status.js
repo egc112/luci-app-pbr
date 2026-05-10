@@ -11,7 +11,7 @@ var pkg = {
 		return "pbr";
 	},
 	get LuciCompat() {
-		return 32;
+		return 33;
 	},
 	get ReadmeCompat() {
 		return "1.2.3";
@@ -51,7 +51,11 @@ var pkg = {
 			const iface = g.name;
 			if (!iface) return;
 			if (elements.length) elements.push(E("br"));
-			const parts = [iface];
+			// Prefer the labeled form (e.g. "mwan4:wan", "netifd:wan") sent by
+			// the principal app; fall back to the canonical iface name for
+			// older principal-app versions that don't emit `label`.
+			const display = g.label || iface;
+			const parts = [display];
 			if (g.device_ipv4 && g.device_ipv4 !== iface) parts.push(g.device_ipv4);
 			if (g.gateway_ipv4) parts.push(g.gateway_ipv4);
 			if (g.gateway_ipv6) {
