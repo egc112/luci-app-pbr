@@ -36,6 +36,15 @@ var pkg = {
 	isVersionMismatch: function (luci, pkg, rpcd) {
 		return luci !== pkg || pkg !== rpcd || luci !== rpcd;
 	},
+	// HTML-escape an untrusted scalar value with LuCI's %h format specifier so
+	// config-derived text reflected into status messages cannot inject markup
+	// when appended via innerHTML by E()/dom.create. Trusted array infos built
+	// in this file (e.g. anchor tags) are passed through unchanged.
+	escapeInfo: function (info) {
+		return Array.isArray(info)
+			? info
+			: info != null && info !== "" ? "%h".format(info) : info;
+	},
 	formatMessage: function (info, template) {
 		if (!template) return _("Unknown message") + "<br />";
 		return (
@@ -178,8 +187,12 @@ var status = baseclass.extend({
 				packageCompat: reply.packageCompat || 0,
 				rpcdCompat: reply.rpcdCompat || 0,
 				gateways: reply.gatewaysList || [],
-				errors: reply.errors || [],
-				warnings: reply.warnings || [],
+				errors: (reply.errors || []).map(function (e) {
+					return Object.assign({}, e, { info: pkg.escapeInfo(e.info) });
+				}),
+				warnings: (reply.warnings || []).map(function (e) {
+					return Object.assign({}, e, { info: pkg.escapeInfo(e.info) });
+				}),
 			};
 
 			if (
@@ -284,7 +297,7 @@ var status = baseclass.extend({
 					),
 					warningResolverNotSupported: _(
 						"Resolver set (%s) is not supported on this system.",
-					).format(L.uci.get(pkg.Name, "config", "resolver_set")),
+					).format(pkg.escapeInfo(L.uci.get(pkg.Name, "config", "resolver_set"))),
 					warningAGHVersionTooLow: _(
 						"Installed AdGuardHome (%s) doesn't support 'ipset_file' option.",
 					),
@@ -382,13 +395,13 @@ var status = baseclass.extend({
 					errorNoIptables: _("%s binary cannot be found").format("iptables"),
 					errorNoIpset: _(
 						"Resolver set support (%s) requires ipset, but ipset binary cannot be found",
-					).format(L.uci.get(pkg.Name, "config", "resolver_set")),
+					).format(pkg.escapeInfo(L.uci.get(pkg.Name, "config", "resolver_set"))),
 					errorNoNft: _(
 						"Resolver set support (%s) requires nftables, but nft binary cannot be found",
-					).format(L.uci.get(pkg.Name, "config", "resolver_set")),
+					).format(pkg.escapeInfo(L.uci.get(pkg.Name, "config", "resolver_set"))),
 					errorResolverNotSupported: _(
 						"Resolver set (%s) is not supported on this system",
-					).format(L.uci.get(pkg.Name, "config", "resolver_set")),
+					).format(pkg.escapeInfo(L.uci.get(pkg.Name, "config", "resolver_set"))),
 					errorServiceDisabled: _(
 						"The %s service is currently disabled",
 					).format(pkg.Name),
