@@ -4,10 +4,7 @@
 		"read": {
 			"ubus": {
 				"luci.pbr": [
-					"getInitList",
-					"getInitStatus",
-					"getInterfaces",
-					"getPlatformSupport"
+					"getInitStatus"
 				]
 			},
 			"file": {
