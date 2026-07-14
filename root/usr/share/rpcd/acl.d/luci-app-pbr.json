@@ -7,14 +7,6 @@
 					"getInitStatus"
 				]
 			},
-			"file": {
-				"/usr/share/nftables.d/ruleset-post/30-pbr.nft": [
-					"read"
-				],
-				"/var/run/pbr.nft": [
-					"read"
-				]
-			},
 			"uci": [
 				"pbr"
 			]
