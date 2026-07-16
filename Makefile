@@ -5,7 +5,7 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=luci-app-pbr
 PKG_LICENSE:=AGPL-3.0-or-later
-PKG_MAINTAINER:=Stan Grishin <stangri@melmac.ca>
+PKG_MAINTAINER:=Stan Grishin <stangri@melmac.ca>, Erik Conijn <egc112@msn.com>
 PKG_VERSION:=1.2.3
 PKG_RELEASE:=73
 
