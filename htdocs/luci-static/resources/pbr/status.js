@@ -55,6 +55,7 @@ var pkg = {
 	},
 	buildGatewayElements: function (gw) {
 		const gateways = Array.isArray(gw) ? gw : Object.values(gw);
+		const ipv6Enabled = L.uci.get(pkg.Name, "config", "ipv6_enabled") === "1";
 		const elements = [];
 		gateways.forEach(function (g) {
 			const iface = g.name;
@@ -66,11 +67,10 @@ var pkg = {
 			const display = g.label || iface;
 			const parts = [display];
 			if (g.device_ipv4 && g.device_ipv4 !== iface) parts.push(g.device_ipv4);
-			if (g.gateway_ipv4) parts.push(g.gateway_ipv4);
-			if (g.gateway_ipv6) {
-				if (g.device_ipv6 && g.device_ipv6 !== iface)
-					parts.push(g.device_ipv6);
-				parts.push(g.gateway_ipv6);
+			parts.push(g.gateway_ipv4 || "0.0.0.0");
+			if (ipv6Enabled) {
+				if (g.device_ipv6 && g.device_ipv6 !== iface) parts.push(g.device_ipv6);
+				parts.push(g.gateway_ipv6 || "::0");
 			}
 			var line = parts.join("/");
 			if (g.default) {
