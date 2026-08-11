@@ -109,10 +109,25 @@ return view.extend({
 			text
 		);
 		o.value("none", _("Disabled"));
+		o.default = "none";
 		if (reply.platform.dnsmasq_nftset_support) {
 			o.value("dnsmasq.nftset", _("Dnsmasq nft set"));
 			o.default = "dnsmasq.nftset";
+		} else if (
+			L.uci.get(pkg.Name, "config", "resolver_set") === "dnsmasq.nftset"
+		) {
+			// Support detection can fail transiently, for instance when dnsmasq
+			// is not installed or not yet running. Without the stored value in
+			// the choice list the select falls back to its first entry and
+			// saving would silently rewrite resolver_set to "none". The
+			// description above already states that support is missing.
+			o.value("dnsmasq.nftset", _("Dnsmasq nft set"));
 		}
+		// luci-base 974b5864e05e removes options whose value equals their
+		// default. pbr provisions resolver_set in /etc/config/pbr and in
+		// uci-defaults, so without this the stored dnsmasq.nftset would be
+		// deleted on the first Save and nft set handling silently disabled.
+		o.rmempty = false;
 
 		o = s.taboption(
 			"tab_basic",
@@ -199,8 +214,10 @@ return view.extend({
 		}
 		o.datatype = "network";
 		o.default = "wan";
-		o.rmempty = true;
-		o.forcewrite = true;
+		// Keeps the default visible in /etc/config/pbr. luci-base 974b5864e05e
+		// removes values equal to the default and made forcewrite unreachable
+		// in exactly that case, so rmempty is what forces the write now.
+		o.rmempty = false;
 
 		o = s.taboption(
 			"tab_advanced",
@@ -219,8 +236,8 @@ return view.extend({
 		}
 		o.datatype = "network";
 		o.default = "wan6";
-		o.rmempty = true;
-		o.forcewrite = true;
+		// See uplink_interface above.
+		o.rmempty = false;
 		o.depends("ipv6_enabled", "1");
 
 		o = s.taboption(
